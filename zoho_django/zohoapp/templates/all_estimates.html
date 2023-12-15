@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<style>
+  #over:hover{
+    background-color: rgba(110, 110, 110, 0.616);
+  }
+
+  .dropdown-item:hover{
+    color: chocolate;
+  }
+
+  #estimates_table tbody{
+    cursor: pointer;
+  }
+
+  .modal{
+    z-index: 9999;
+    overflow: scroll;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="fixed-top" style="top: 7rem; margin-left: 18rem;">
+    <div style="height: 600px;overflow-y: scroll;">
+      {% for message in messages %}
+        <h5>
+          <div class="alert alert-danger message" style="margin-bottom: 2vh; width: 90%;">
+            {{ message }}
+          </div>
+        </h5>
+      {% endfor %}
+      <div class="row container-fluid">
+        <div class="col-md-3"><a class="text-white" style="font-size: 2rem;">All Estimates</a></div>
+        <div class="col-md-5"></div>
+        <div class="col-md-3">
+          <div class="d-flex" style="margin-left: 9vh; margin-top: 2vh;" >
+            <a onclick="ExportToExcel()" class="btn text-center pt-2 btn-outline-warning d-flex" style="width: fit-content;">
+              <i class='fas fa-file-export' style='font-size:20px'></i> <span style="margin-top: 3px;">Export</span>
+            </a>
+            <a data-toggle="modal" data-target="#import_modal" class="btn text-center pt-2 btn-outline-warning d-flex" style="width: fit-content; margin-left: 2vh;">
+              <i class="fas fa-file-import" style='font-size:20px'></i> <span style="margin-top: 3px;">Import</span>
+            </a>
+          </div>
+        </div>
+      </div>    
+      <br>
+      <div class="row container-fluid mb-3">
+        <div class="col-md-3"><input type="text" id="search" class="form-control bg-light text-dark" placeholder="Search.." autocomplete="off"></div>
+        <div class="col-md-2">
+          <div class="dropdown">
+            <a class="btn text-center px-4 pt-2 btn-outline-warning" id="sortbutton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button" >
+              <i  class="fas fa-sort m-1"></i>
+            </a>
+            <div class="dropdown-menu m-1">
+              <a class="dropdown-item" href="{% url 'allestimates' %}">All</a>
+              <a class="dropdown-item" onclick="sorttable(0)">Customer Name</a>
+              <a class="dropdown-item" onclick="sorttable(1)">Estimate Number</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-3">
+          <div class="dropdown d-flex">
+            <a class="btn text-center px-4 pt-2 btn-outline-warning" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button" >
+              <i class="fa fa-filter mt-1"></i>
+            </a>
+            <div class="dropdown-menu m-1">
+              <a class="dropdown-item" onclick="applyFilter('All')">All</a>
+              <a class="dropdown-item" onclick="applyFilter('Draft')">Draft</a>
+              <a class="dropdown-item" onclick="applyFilter('Saved')">Saved</a>
+            </div>
+            <a style="height: 5vh; margin-left: 2vh;" class="btn btn-outline-warning text-right px-3 py-2" role="button" style="margin-left: 5px;" href="{% url 'newestimate' %}">
+              <i class="fa fa-plus" style="font-size: large;"></i><span style="font-size: 3vh;">New</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row container-fluid">
+        <div class="col-sm-12 col-md-11 col-lg-11">
+          <table class="table  text-white" id="estimates_table">
+            <thead>
+              <tr>
+                <th>DATE</th>
+                <th>ESTIMATE NUMBER</th>
+                <th>CUSTOMER NAME</th>
+                <th>CUSTOMER MAIL ID</th>
+                <th>AMOUNT</th>
+                <th>STATUS</th>
+                <th>BALANCE</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for estimate in estimates %}
+                <tr id="over">
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.estimate_date}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.estimate_no}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.customer_name}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.customer_mailid}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.total}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.status}}</td>
+                  <td style="text-align: center;" class='clickable-row' data-href="estimateslip/{{ estimate.id }}">{{estimate.balance}}</td>
+                  <td style="text-align: center;">
+                    <div class="dropdown " >
+                      <a class="dropdown-toggle btn btn-outline-warning pt-2 pb-2"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                        Convert To
+                      </a>
+                      <div class="dropdown-menu m-1">
+                        {% if estimate.convert_sales == 'converted' %}
+                        <a class="dropdown-item" href="">To Invoice </a>
+                        <a class="dropdown-item" href="">To SalesOrder (Done) <br> <span class="text-warning">{{ estimate.salesorder.sales_no}}</span> </a>
+                        <a class="dropdown-item" href="">To Rec.Invoice</a>
+                        {% elif estimate.convert_invoice == 'converted' %}
+                        <a class="dropdown-item" href="">To Invoice ( Done )<br><span class="text-warning">{{ estimate.invoice.invoice_no}}</span></a>
+                        <a class="dropdown-item" href="" >To SalesOrder</a>
+                        <a class="dropdown-item" href="">To Rec.Invoice</a>
+                        {% elif estimate.convert_recinvoice == 'converted' %}
+                        <a class="dropdown-item" href="">To Invoice </a>
+                        <a class="dropdown-item" href="">To SalesOrder</a>
+                        <a class="dropdown-item" href="">To Rec.Invoice (Done)<br><span class="text-warning">{{ estimate.reccinvoice.reinvoiceno}}</span> </a>
+                        {% else %}
+                        <a class="dropdown-item" href="{% url 'converttoinvoice' estimate.id %}">To Invoice </a>
+                        <a class="dropdown-item" href="{% url 'convert_to_salesorder' estimate.id %}">To SalesOrder</a>
+                        <a class="dropdown-item" href="{% url 'convert_to_reccinvoice' estimate.id %}">To Rec.Invoice</a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="import_modal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" style="background: rgb(32, 35, 37);border-radius: 20px;">
+        <div class="modal-header " style="background: rgb(32, 35, 37);">
+          <h1 class="text-light">Import Estimate</h1>
+        </div>
+        <div class="modal-body" style="background: rgb(32, 35, 37);">
+          <div class="card p-3 m-3">        
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <h5 class="text-danger">IMPORTANT:</h5>
+                <p class="text-light">File should have 2 sheets named 'Sheet1' & 'Sheet2' and column name & order should be in the given format(Uppercase)</p>
+                <p class="text-light">Place of supply should be in the following format ,eg: for kerala  Type [KL]-Kerala  </p>
+                <div class="row">
+                  <div class="col-md-3">
+                    [AD]-Andhra Pradesh <br>
+                    [AR]-Arunachal Pradesh <br>
+                    [AS]-Assam<br>
+                    [BR]-Bihar<br>
+                    [CG]-Chhattisgarh<br>
+                    [GA]-Goa<br>
+                    [GJ]-Gujarat<br>
+                    [HR]-Haryana<br>
+                    [HP]-Himachal Pradesh<br>
+                    [JH]-Jharkhand<br>
+                  </div>
+                  <div class="col-md-3">
+                    [KA]-Karnataka<br>
+                    [KL]-Kerala<br>
+                    [MP]-Madhya Pradesh<br>
+                    [MH]-Maharashtra<br>
+                    [MN]-Manipur<br>
+                    [ML]-Meghalaya<br>
+                    [MZ]-Mizoram<br>
+                    [NL]-Nagaland<br>
+                    [OD]-Odisha<br>
+                    [PB]-Punjab<br>
+                  </div>
+                  <div class="col-md-3">
+                    [RJ]-Rajasthan<br>
+                    [SK]-Sikkim<br>
+                    [TN]-Tamil Nadu<br>
+                    [TS]-Telangana<br>
+                    [TR]-Tripura<br>
+                    [UK]-Uttarakhand<br>
+                    [UP]-Uttar Pradesh<br>
+                    [WB]-West Bengal<br>
+                    [AN]-Andaman and Nicobar Islands<br>
+                  </div>
+                  <div class="col-md-3">
+                    [CH]-Chandigarh<br>
+                    [DNH]-Dadra and Nagar Haveli<br>
+                    [DD]-Damn and Diu<br>
+                    [DL]-Delhi<br>
+                    [JK]-Jammu and Kashmir<br>
+                    [LA]-Ladakh<br>
+                    [LD]-Lakshadweep<br>
+                    [PY]-Puducherry<br>
+                    [OT]-Other Territory<br>
+                  </div>
+                </div><br>
+                <p class="text-light">
+                  customer name should be given with salutation  and the name and salutation should be in uppercase<br>
+                  eg :MR. ADITHYA CHOPRA
+                </p>
+                <p class="text-light">
+                  Status should be given in one of the following format <br>
+                  Draft<br>
+                  Saved
+                </p>
+                <p class="text-light">
+                  If you have IGST Tax ,then fill CGST and SGST filled with 0  <br>
+                  If you have CGST and SGST Tax ,then fill IGST filled with 0
+                </p>
+              </div>
+            </div>
+          </div>
+          <a href="{% url 'downloadEstimateSampleImportFile' %}" class="text-primary " style="font-size:medium; margin-left: 2vh;">Download Sample File from here to avoid errors</a> <br>
+          <form action="{% url 'import_estimate' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h6 class="text-light" style="margin-left: 2vh;">Upload File</h6>
+            <input type="file" name="excel_file" class="form-control text-dark" style="width: 50%; margin-left: 2vh;"><br>
+            <button class="btn btn-outline-warning mt-1" style="margin-left: 2vh;">IMPORT</button>
+          </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function sorttable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("estimates_table");
+    switching = true;
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+        if(n == 0){
+          x = rows[i].getElementsByTagName("td")[2];
+          y = rows[i + 1].getElementsByTagName("td")[2];
+        }else{
+          x = rows[i].getElementsByTagName("td")[1];
+          y = rows[i + 1].getElementsByTagName("td")[1];
+        }
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+      }
+    }
+  }
+</script>
+
+<script>
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+      window.location = $(this).data("href");
+    });
+  });
+</script>
+
+<script>
+  var $rows = $('table tbody tr');
+  $('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    $rows.hide().filter(function() {
+      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      return ~text.indexOf(val);
+    }).show();
+  });
+</script>
+
+<script>
+  function applyFilter(currentFilter) {
+    var rows = $("#estimates_table tbody tr");
+    rows.show();
+    if (currentFilter === "Draft" || currentFilter === "Saved") {
+      rows.filter(":not(:contains('" + currentFilter + "'))").hide();
+    }
+  }
+</script>
+
+<script>
+  function ExportToExcel(){
+    var tableData = $("#estimates_table tbody tr:visible").map(function(index) {
+      return {
+        "DATE": $(this).find("td:eq(0)").text(),
+        "ESTIMATE NUMBER": $(this).find("td:eq(1)").text(),
+        "CUSTOMER NAME": $(this).find("td:eq(2)").text(),
+        "CUSTOMER MAIL ID": $(this).find("td:eq(3)").text(),
+        "AMOUNT": $(this).find("td:eq(4)").text(),
+        "STATUS": $(this).find("td:eq(5)").text(),
+        "BALANCE": $(this).find("td:eq(6)").text()
+      };
+    }).get();
+    var ws = XLSX.utils.json_to_sheet(tableData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'Estimate.xlsx');
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous">
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous">
+</script>
+{% endblock %}

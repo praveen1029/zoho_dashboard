@@ -447,8 +447,8 @@
                         <p style="color: white; opacity: 1; font-size: 35px;margin-top: 3vh;">ZD</p>
                     </a>
                 </div>
-                <nav class="nav">
-                    <li class="nav-item menu-items  dropdown">
+                <ul class="nav">
+                    <li class="nav-item menu-items ">
                         <a class="nav-link" href="{% url 'dashboard' %}">
                             <span class="menu-icon">
                                 <i class="mdi mdi-home"></i>
@@ -1223,7 +1223,7 @@
 
                     </li>
 
-                    <li class="nav-item menu-items dropdown">
+                    <li class="nav-item menu-items">
                         <a class="nav-link" href="{% url 'report_inventory_view' %}">
                             <span class="menu-icon">
                                 <i class="mdi mdi-calendar-week"></i>
@@ -1232,7 +1232,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item menu-items dropdown">
+                    <li class="nav-item menu-items">
                         <a class="nav-link" href="#">
                             <span class="menu-icon">
                                 <i class="mdi mdi-file-outline"></i>
@@ -1250,7 +1250,7 @@
                             <span class="menu-title  text-white">Payroll</span>
 
                         </a>
-                        <ul class="dropdown-menu " style="bottom: 100%;">
+                        <ul class="dropdown-menu">
                             <li>
                                 {% if setting_variable.employees == "yes" %}
                                 <div class="dropdown-item">
@@ -1338,7 +1338,7 @@
 
                     </li>
 
-                    <li class="nav-item menu-items dropdown">
+                    <li class="nav-item menu-items">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                             aria-expanded="false">
                             <span class="menu-icon"><i class="mdi mdi-file-outline "></i></span>
@@ -1358,20 +1358,20 @@
                             </li>
                         </ul>
                     </li>
-                </nav>
+                </ul>
             </nav>
             <div class="container-fluid page-body-wrapper">
 
-                <nav class="navbar p-0 fixed-top" style="overflow: visible;">
+                <nav class="navbar p-0 fixed-top" style="z-index: 9999;">
                     <div class="navbar-brand-wrapper d-flex d-lg-none as justify-content-center"
                         style="background-color: transparent;">
                         <a class="sidebar-brand brand-logo-mini text-dark text-decoration-none " href="index.html">
-                            <p style="color: white; opacity: 1; font-size: 25px ;margin-top: 2vh; margin-left: 2cap; margin-right: 2vh;">
+                            <p style="color: white; opacity: 1; font-size: 30px ;margin-top: 1vh; margin-left: 5vh; margin-right: 2vh;">
                                 Zoho</p>
                         </a>
                     </div>
 
-                    <div class="d-lg-none" style="padding-top: 0%; margin-right: -3rcap">
+                    <div class="d-lg-none ml-5" style="padding-top: 0%; margin-right: -8vh">
                         <input type="text" autocomplete="off" onkeyup="filter(this);"
                             class="form-control text-dark" placeholder="search..." />
                     </div>
@@ -1380,12 +1380,12 @@
                             <span class="mdi mdi-menu"></span>
                         </button>
 
-                            <div class="search-bar-container" id="search-container" style="padding-top: 0%; margin-left: 5vh;">
+                            <div class="search-bar-container" id="search-container" style="padding-top: 0%;">
                                 <input type="text" autocomplete="off" id="myInput" onkeyup="filter(this);"
                                     class="form-control text-dark" placeholder="search..." />
                             </div>
                             
-                        <div class="mt-5" id="myDIV" style="position:absolute;width:550px;top:50%; margin-left: 10vh;">
+                        <div class="mt-5" id="myDIV" style="position:absolute;width:550px;top:50%;">
                             <ul id="myList" class="one" style="background-color: #131414;list-style: none;">
                                 <li><a class="text-white" href="{% url 'dashboard' %}">Dashboard</a></li>
                                 <li><a class="text-white" href="{% url 'itemview' %}">Item</a></li>
@@ -1412,6 +1412,7 @@
                                 </li>
                             </ul>
                         </div>
+
 
                         <script>
                             $(document).ready(function () {
@@ -1449,7 +1450,6 @@
                                 });
                             });
                         </script>
-
                         <ul class="navbar-nav navbar-nav-right">
                             <li>
                                 <div class="icons d-none d-lg-block">
@@ -1594,8 +1594,6 @@
                         const issmall = window.innerWidth < 300 && window.innerHeight < 700;
                     if (issmall) {
                       document.getElementById('sidebar').style.marginTop = '11vh';
-                      $("#search-container").hide();
-                      $("#myList li").hide();
                     }else{
                         document.getElementById('sidebar').style.marginTop = '0';
                     }

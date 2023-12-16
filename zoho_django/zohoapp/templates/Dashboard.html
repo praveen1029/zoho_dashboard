@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+
+
 <style>
   .grid-container {
     display: grid;
@@ -31,17 +34,11 @@
     overflow-y: scroll;
     padding-right: 10px;
     height: 85vh;
-
    
   }
 
-  .main-content {
-    width: 75%;
-  }
 
-  .sidebar {
-    width: 20%;
-  }
+
 
   /* Style for the small slider switch container */
   .small-switch {
@@ -134,226 +131,229 @@ legend {
   margin-bottom: 10px; /* Add spacing below the legend */
   color: white; /* Text color for the legend */
 }
+
+
+::-webkit-scrollbar{
+    display: none;
+  }
  
 </style>
+
 <section >
 
   <div class="content-container"  >
     <!-- Main Content -->
     <div class="main-content">
-      <div class="row  " style="top: 7rem; ">
+      <div class="row mt-5 mt-lg-1 ">
 
-        <div class="col-md-12">
-
-          <div style="height: 640px;width: 900px;">
+        <div class="col-md-10">
 
             <div class="row">
               <h1 style="color: white;"> Dashboard</h1><br>
-              
-              <div class="grid-container" style="background-color: rgb(32, 35, 37);color:white;border-radius: 5px;">
-                <fieldset style="border:1px solid white;background-color:#495057;color:white;width: 100%;">
-                  <select name="" id="" style="float: right;">
-                    <option value="This month" selected>This month</option>
-                    <option value="Last month">Last month</option>
-                    <option value="This Quarter ">This Quarter</option>
-                    <option value="This Year">This Year</option>
-                  </select>
-                  <div class="grid-item" style="background-color: #495057; color: white; font-size: 15px;">
-                    <h4>
-                      <span class="menu-icon">
-                        <i class="mdi mdi-cart-outline "></i>
-                      </span>&nbsp;Sale
-                    </h4><br>
-                    <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMin meet"
-                      style="background-color: #495057;">
-                      <path d="M0 100 C100 150, 150 80, 300 150 S450 80, 500 150 S650 80, 700 100 S800 150, 1000 100"
-                        fill="transparent" stroke="green" stroke-width="5" />
-                    </svg>
-                    <b>
-                      <h6>$ 0.00</h6>
-                    </b>
-                    <p>Total Sale(Aug)</p>
-                    <p>0%</p>
-                    <p>This month growth</p>
-                  </div>
-                </fieldset>
-                <fieldset style="border: 1px solid white;background-color: #495057;color: white; flex: 1;">
-                  <select name="" id="" style="float: right;">
-                    <option value="This month" selected>This month</option>
-                    <option value="Last month">Last month</option>
-                    <option value="This Quarter ">This Quarter</option>
-                    <option value="This Year">This Year</option>
-                  </select>
-                  <div class="grid-item" style="background-color: #495057; color: white; font-size: 15px;">
-                    <h4>
-                      <span class="menu-icon">
-                        <i class="mdi mdi-calendar-week"></i>
-                      </span>&nbsp;Expenses
-                    </h4><br>
-                    <h6>$ 0.00</h6>
-                    <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMin meet"
-                      style="background-color: #495057;">
-                      <path d="M0 100 C100 150, 150 80, 300 150 S450 80, 500 150 S650 80, 700 100 S800 150, 1000 100"
-                        fill="transparent" stroke="green" stroke-width="5" />
-                    </svg>
-                    <p>Report: From 01 August to 31 August</p>
-                  </div>
-                </fieldset>
-
-              </div><br>
+                <div class="col-sm-3 col-md-6 col-lg-6">
+                    <fieldset style="border:1px solid white;background-color:#363333; color:white;" >
+                        <select name="" id="" style="float: right;">
+                            <option value="This month" selected>This month</option>
+                            <option value="Last month">Last month</option>
+                            <option value="This Quarter ">This Quarter</option>
+                            <option value="This Year">This Year</option>
+                        </select>
+                        <div class="grid-item" style="background-color: #363333; color: white; border: none;">
+                            <h4>
+                            <span class="menu-icon">
+                                <i class="mdi mdi-cart-outline "></i>
+                            </span>&nbsp;Sale
+                            </h4><br>
+                            <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMin meet"
+                            style="background-color: #363333;">
+                            <path d="M0 100 C100 150, 150 80, 300 150 S450 80, 500 150 S650 80, 700 100 S800 150, 1000 100"
+                                fill="#363333" stroke="green" stroke-width="5" />
+                            </svg>
+                            <b>
+                            <h6>$ 0.00</h6>
+                            </b>
+                            <p>Total Sale(Aug)</p>
+                            <p>0%</p>
+                            <p>This month growth</p>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-sm-3 col-md-6 col-lg-6">
+                    <fieldset style="border: 1px solid white;background-color: #bfdfc8;color: black;height: 96%;">
+                        <select name="" id="" style="float: right;">
+                            <option value="This month" selected>This month</option>
+                            <option value="Last month">Last month</option>
+                            <option value="This Quarter ">This Quarter</option>
+                            <option value="This Year">This Year</option>
+                        </select>
+                        <div class="grid-item" style="background-color: #bfdfc8; color: black; font-size: 15px; border: none;">
+                            <h4>
+                            <span class="menu-icon">
+                                <i class="mdi mdi-calendar-week"></i>
+                            </span>&nbsp;Expenses
+                            </h4><br>
+                            <h6>$ 0.00</h6>
+                            <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMin meet"
+                            style="background-color: #bfdfc8;">
+                            <path d="M0 100 C100 150, 150 80, 300 150 S450 80, 500 150 S650 80, 700 100 S800 150, 1000 100"
+                                fill="transparent" stroke="green" stroke-width="5" />
+                            </svg>
+                            <p>Report: From 01 August to 31 August</p>
+                        </div>
+                        </fieldset>
+                </div>
             </div>
 
-            <div class="row" style="width: 95%;">
-
-              <div class="grid-container" style="background-color: rgb(32, 35, 37);color:white;display: flex;">
-                <fieldset style="border:1px solid white;background-color:#495057;color:white;width: 33%;flex: 1;">
-                  <div class="grid-item" style="background-color:#495057;color:white;font-size:15px;">
-                    <h4><span style="color: green;">&#9660;</span> You'll recieve</h4><br>
-
-                    <table>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                    </table>
-
-
-                  </div>
+            <div class="row" style="width: 100%;" >
+            <div class="col-sm-3 col-md-4 col-lg-4">
+                <fieldset style="border:1px solid white;background-color:transparent;color:white;width:106%;flex: 1;">
+                    <div class="grid-item" style="background-color:transparent;color:white;font-size:15px; border: none;">
+                      <h4><span style="color: green;">&#9660;</span> You'll recieve</h4><br>
+  
+                      <table>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                      </table>
+  
+  
+                    </div>
                 </fieldset>
-                <fieldset style="border:1px solid white;background-color:#495057;color:white;width: 33%;flex: 1;">
-                  <div class="grid-item" style="background-color:#495057;color:white;font-size:15px;">
-                    <h4><span style="color: red;">&#9650;</span>You'll pay</h4><br>
-
-                    <table>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-                    </table>
-                    </svg>
-
-
-                  </div>
-                </fieldset>
-                <fieldset style="border:1px solid white;background-color:#495057;color:white;width: 33%;flex: 1;">
-                  <select name="" id="" style="float: right;">
-                    <option value="This month" selected>This month</option>
-                    <option value="Last month">Last month</option>
-                    <option value="This Quarter ">This Quarter</option>
-                    <option value="This Year">This Year</option>
-                  </select>
-                  <div class="grid-item" style="background-color:#495057;color:white;font-size:15px;">
-                    <h4><span class="menu-icon">
-                        <i class="mdi mdi-basket"></i>
-                      </span>&nbsp;Purchase</h4><br>
-                    <table>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr><br>
-                      <tr>
-                        <td></td>
-                        <td>$ 0.00</td>
-                      </tr>
-
-                    </table>
-
-
-
-                  </div>
-                </fieldset>
-              </div>
             </div>
 
+            <div class="col-sm-3 com-md-4 col-lg-4">
+                <fieldset style="border:1px solid white;background-color:#4d6f91;color:white;width: 106%;flex: 1;">
+                    <div class="grid-item" style="background-color:#4d6f91;color:white;font-size:15px; border: none;">
+                      <h4><span style="color: red;">&#9650;</span>You'll pay</h4><br>
+  
+                      <table>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+                      </table>
+                      </svg>
+  
+  
+                    </div>
+                  </fieldset>
+            </div>
 
+            <div class="col-sm-3 col-md-4 col-md-4">
+                
 
+                <fieldset style="border:1px solid white;background-color:#f4eeca;color:black;width: 106%;flex: 1;">
+                    <select name="" id="" style="float: right;">
+                      <option value="This month" selected>This month</option>
+                      <option value="Last month">Last month</option>
+                      <option value="This Quarter ">This Quarter</option>
+                      <option value="This Year">This Year</option>
+                    </select>
+                    <div class="grid-item" style="background-color:#f4eeca;color:black;font-size:15px; border: none;">
+                      <h4><span class="menu-icon">
+                          <i class="mdi mdi-basket"></i>
+                        </span>&nbsp;Purchase</h4><br>
+                      <table>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr><br>
+                        <tr>
+                          <td></td>
+                          <td>$ 0.00</td>
+                        </tr>
+  
+                      </table>
+  
+  
+  
+                    </div>
+                  </fieldset>
+            </div>
+            </div>
 
-
-
-
-
-
-
-          </div>
+        
 
         </div>
+        <div class="col-md-2">
+                <!-- Right sidebar -->
 
+
+            <fieldset style="border: 1px solid white; background-color:#495057;">
+                <div style="display: flex; align-items: center;">
+                    <legend>Privacy</legend>
+            
+                    <!-- Add a small slider switch to the right of Privacy -->
+                    <label class="small-switch" style="margin-left: 1px;">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </fieldset>
+            <br>
+            <h4>Stock Inventory</h4>
+            <fieldset style="border: 1px solid white;background-color:#495057;" class="p-1">
+                <legend>Stock Value</legend>
+                <p>$ 0.00</p>
+            </fieldset><br>
+
+            <!--<fieldset style="border: 1px solid white;background-color:black;">
+            <legend>Low Stocks</legend>
+            <p>None of your stocks are displayed here</p>
+        </fieldset><br>-->
+            <h4>Cash & Bank</h4>
+            <fieldset style="border: 1px solid white;background-color:#495057;" class="p-1">
+                <legend>Cash in hand</legend>
+                <p>$ 0.00</p>
+            </fieldset><br>
+
+            <fieldset style="border: 1px solid white; background-color: #495057;" class="p-1">
+                <legend>Bank Accounts</legend>
+                <p>$ 0.00</p>
+
+                <table>
+                <tr>
+                    <td></td>
+                    <td>$ 0.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>$ 0.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>$ 0.00</td>
+                </tr>
+                </table>
+            </fieldset>
+  
+  
+  
+        </div>
       </div>
     </div>
 
-    <!-- Right sidebar -->
-    <div>
 
-
-      <fieldset style="border: 1px solid white; background-color:#495057;" class="p-1">
-        <div style="display: flex; align-items: center;">
-            <legend>Privacy</legend>
-    
-            <!-- Add a small slider switch to the right of Privacy -->
-            <label class="small-switch" style="margin-left: 1px;">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </fieldset>
-    <br>
-      <h4>Stock Inventory</h4><br>
-      <fieldset style="border: 1px solid white;background-color:#495057;" class="p-1">
-        <legend>Stock Value</legend>
-        <p>$ 0.00</p>
-      </fieldset><br>
-
-      <!--<fieldset style="border: 1px solid white;background-color:black;">
-    <legend>Low Stocks</legend>
-    <p>None of your stocks are displayed here</p>
-  </fieldset><br>-->
-      <h4>Cash & Bank</h4><br>
-      <fieldset style="border: 1px solid white;background-color:#495057;" class="p-1">
-        <legend>Cash in hand</legend>
-        <p>$ 0.00</p>
-      </fieldset><br>
-
-      <fieldset style="border: 1px solid white; background-color: #495057;" class="p-1">
-        <legend>Bank Accounts</legend>
-        <p>$ 0.00</p>
-
-        <table>
-          <tr>
-            <td></td>
-            <td>$ 0.00</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>$ 0.00</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>$ 0.00</td>
-          </tr>
-        </table>
-      </fieldset>
-
-
-
-    </div>
   </div>
 </section>
+
 
 
 
